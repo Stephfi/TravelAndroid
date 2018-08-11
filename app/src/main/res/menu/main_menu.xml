@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item android:id="@+id/start_activity"
+        android:title="Reise planen"
+        app:showAsAction="never"
+        />
+
+    <item android:id="@+id/packliste_activity"
+        android:title="Packliste"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/singlevacation_activity"
+        android:title="Single Vacation Activity"
+        app:showAsAction="never"
+        />
+
+</menu>
