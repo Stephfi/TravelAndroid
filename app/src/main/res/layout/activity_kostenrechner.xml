@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
-            android:id="@+id/editText_kind"
+            android:id="@+id/editText_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Art der Zahlung"
@@ -19,7 +19,7 @@
             />
 
         <EditText
-            android:id="@+id/editText_amount"
+            android:id="@+id/editText_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Wert"
@@ -29,16 +29,16 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/button_add_kosten"
+        android:id="@+id/button_add_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_button"
         />
 
     <ListView
-        android:id="@+id/listView_kosten"
+        android:id="@+id/listView_prices"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="200dp"/>
 
 
 
@@ -59,7 +59,7 @@
             />
 
         <TextView
-            android:id="@+id/textView_summe_amount"
+            android:id="@+id/textView_summe_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="300 €"

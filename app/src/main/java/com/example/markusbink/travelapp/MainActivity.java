@@ -72,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(this, SingleVacationActivity.class);
                 startActivity(i);
                 return true;
+
+            case R.id.kostenrechner_activity:
+                Intent kostenrechner = new Intent(this, Kostenrechner.class);
+                startActivity(kostenrechner);
+                return true;
+
+
             default:
                 return super.onOptionsItemSelected(item);
         }

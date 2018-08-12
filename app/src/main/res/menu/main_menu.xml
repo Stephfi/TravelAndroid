@@ -17,4 +17,9 @@
         app:showAsAction="never"
         />
 
+    <item android:id="@+id/kostenrechner_activity"
+        android:title="Kostenrechner"
+        app:showAsAction="never"
+        />
+
 </menu>

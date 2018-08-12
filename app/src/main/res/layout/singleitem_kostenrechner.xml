@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:gravity="center">
+
+
+        <TextView
+            android:id="@+id/textview_kostenrechner_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:text="Essen gekauft für alle"
+            android:padding="16dp"
+            android:textSize="16sp"
+            />
+
+        <TextView
+            android:id="@+id/textview_kostenrechner_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:text="25 $"
+            android:textAlignment="textEnd"
+            android:gravity="end"
+            android:padding="16dp"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:inputType="number"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/border_bottom_black"/>
+
+</LinearLayout>
