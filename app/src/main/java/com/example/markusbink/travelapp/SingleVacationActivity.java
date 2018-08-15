@@ -1,14 +1,9 @@
 package com.example.markusbink.travelapp;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,8 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.markusbink.travelapp.PackingList.PackingList;
 
-public class SingleVacationActivity extends AppCompatActivity {
+
+public class SingleVacationActivity extends ActionBarActivity {
 
     TextView textViewVacationName, textViewStartDate, textViewEndDate;
     Button buttonBackButton;
@@ -87,7 +84,7 @@ public class SingleVacationActivity extends AppCompatActivity {
                 return true;
 
             case R.id.packliste_activity:
-                Intent packlisteIntent = new Intent(this, Packliste.class);
+                Intent packlisteIntent = new Intent(this, PackingList.class);
                 startActivity(packlisteIntent);
                 return true;
 

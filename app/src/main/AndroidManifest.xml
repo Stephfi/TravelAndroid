@@ -16,11 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ActionBarActivity"/>
         <activity android:name=".SingleVacationActivity"
             android:parentActivityName=".MainActivity"/>
-        <activity android:name=".Packliste"
+        <activity android:name=".PackingList.PackingList"
             android:parentActivityName=".MainActivity"/>
-        <activity android:name=".Kostenrechner"
+        <activity android:name=".SpendingCalculator.SpendingCalculator"
             android:parentActivityName=".MainActivity"/>
     </application>
 

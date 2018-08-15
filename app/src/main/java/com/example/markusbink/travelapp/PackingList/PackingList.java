@@ -1,12 +1,10 @@
-package com.example.markusbink.travelapp;
+package com.example.markusbink.travelapp.PackingList;
 
 import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,10 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-public class Packliste extends AppCompatActivity {
+import com.example.markusbink.travelapp.ActionBarActivity;
+import com.example.markusbink.travelapp.Database.RoomDatabase;
+import com.example.markusbink.travelapp.R;
+
+import java.util.ArrayList;
+
+public class PackingList extends ActionBarActivity {
 
     private static final String TAG = "PackingList";
 
@@ -27,26 +29,28 @@ public class Packliste extends AppCompatActivity {
     private Button buttonLuggage;
     private ListView listViewLuggage;
     private ArrayList<String> luggageList = new ArrayList<>();
-    private PackingListActivityItem[] packingList;
+    private PackingList_SingleItem[] packingList;
     private ArrayAdapter<String> luggageAdapter;
-    private PackingListDatabase db;
+    private RoomDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_packliste);
+        setContentView(R.layout.activity_packinglist);
             initDB();
             initUi();
             initActionBar();
             initListeners();
 
+        getSupportActionBar().setTitle("Packliste");
+
 
 
     }
 
-    private PackingListDatabase initDB() {
+    private RoomDatabase initDB() {
 
-        db = Room.databaseBuilder(Packliste.this, PackingListDatabase.class, DATABASE_NAME).fallbackToDestructiveMigration().build();
+        db = Room.databaseBuilder(PackingList.this, RoomDatabase.class, DATABASE_NAME).fallbackToDestructiveMigration().build();
         return db;
     }
 
@@ -81,7 +85,7 @@ public class Packliste extends AppCompatActivity {
             public void run() {
 
                 if(!luggageItem.equals("")) {
-                PackingListActivityItem packingItem = new PackingListActivityItem();
+                PackingList_SingleItem packingItem = new PackingList_SingleItem();
                 packingItem.setItemName(luggageItem);
                 db.packingListInterface().insertItem(packingItem);
 
@@ -131,13 +135,50 @@ public class Packliste extends AppCompatActivity {
     }
 
 
+    // Remove all Items from database and list
+
+    public void deleteAllIListItems() {
+
+        Log.d(TAG, "deleteAllIListItems: deleted");
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                
+              db.packingListInterface().deleteAllItems();
+
+              runOnUiThread(new Runnable() {
+                  @Override
+                  public void run() {
+
+                      if(luggageList.size() != 0) {
+
+                          luggageList.clear();
+                          luggageAdapter.notifyDataSetChanged();
+
+                          Toast.makeText(getApplicationContext(), "All Items have been removed", Toast.LENGTH_SHORT).show();
+                      } else {
+                          Toast.makeText(getApplicationContext(), "No Items to remove", Toast.LENGTH_SHORT).show();
+
+                      }
+                  }
+              });
+
+
+            }
+        }).start();
+
+    }
+
+
     private void initSavedItems() {
         new Thread(new Runnable() {
             @Override
             public void run() {
 
                 packingList = db.packingListInterface().selectAllItems();
-                for(PackingListActivityItem item : packingList) {
+                for(PackingList_SingleItem item : packingList) {
                     String itemName = item.getItemName();
                    addItemToList(itemName);
                 }
@@ -150,13 +191,15 @@ public class Packliste extends AppCompatActivity {
     }
 
 
+
+
     private void addItemToList(String itemName) {
         luggageList.add(itemName);
         luggageAdapter.notifyDataSetChanged();
     }
 
     private void initActionBar() {
-        getSupportActionBar().setTitle("Packliste");
+        getSupportActionBar().setTitle("PackingList");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
@@ -171,4 +214,27 @@ public class Packliste extends AppCompatActivity {
         initSavedItems();
     }
 
+
+    //SET DELETE-ICON AND ONCLICKLISTENER FOR IT
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.deleteItems).setVisible(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                deleteAllIListItems();
+
+                return false;
+            }
+        });
+
+
+
+        return true;
+
+
+
+    }
 }

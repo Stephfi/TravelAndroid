@@ -1,4 +1,4 @@
-package com.example.markusbink.travelapp;
+package com.example.markusbink.travelapp.PackingList;
 
 
 import android.arch.persistence.room.Entity;
@@ -6,7 +6,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 @Entity(tableName = "packingItems")
-public class PackingListActivityItem {
+public class PackingList_SingleItem {
     @NonNull
     @PrimaryKey(autoGenerate = true)
     private int itemId;
@@ -30,7 +30,7 @@ public class PackingListActivityItem {
         this.itemName = itemName;
     }
 
-    public PackingListActivityItem() {
+    public PackingList_SingleItem() {
 
     }
 }

@@ -1,28 +1,23 @@
-package com.example.markusbink.travelapp;
+package com.example.markusbink.travelapp.Database;
 
 
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import java.util.ArrayList;
+import com.example.markusbink.travelapp.PackingList.PackingList_SingleItem;
 
 @Dao
-public interface PackingListInterface {
+public interface PackingListDao {
 
     @Insert
-    void insertItem(PackingListActivityItem item);
+    void insertItem(PackingList_SingleItem item);
 
     @Query("DELETE FROM packingItems WHERE itemName = :item")
     void deleteItem(String item);
 
     @Query("SELECT * FROM packingItems")
-    PackingListActivityItem[] selectAllItems();
-
-
-
-
+    PackingList_SingleItem[] selectAllItems();
 
     @Query("DELETE FROM packingItems")
     void deleteAllItems();

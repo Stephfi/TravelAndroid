@@ -1,12 +1,12 @@
-package com.example.markusbink.travelapp;
+package com.example.markusbink.travelapp.SpendingCalculator;
 
-public class Kostenrechner_SingleItem {
+public class SpendingCalculator_SingleItem {
 
     String name;
     String price;
 
 
-    public Kostenrechner_SingleItem(String name, String price) {
+    public SpendingCalculator_SingleItem(String name, String price) {
         this.name = name;
         this.price = price;
     }

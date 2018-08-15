@@ -9,14 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
+import com.example.markusbink.travelapp.PackingList.PackingList;
+import com.example.markusbink.travelapp.SpendingCalculator.SpendingCalculator;
 import com.facebook.stetho.Stetho;
 
-import java.text.DateFormat;
-import java.util.Calendar;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ActionBarActivity {
 
     EditText editTextvacationName, editTextStartDate, editTextEndDate;
     Button buttonPlanVacation;
@@ -56,39 +54,5 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.start_activity:
-                Intent startIntent = new Intent(this, MainActivity.class);
-                startActivity(startIntent);
-                return true;
-
-            case R.id.packliste_activity:
-                Intent packlisteIntent = new Intent(this, Packliste.class);
-                startActivity(packlisteIntent);
-                return true;
-
-            case R.id.singlevacation_activity:
-                Intent i = new Intent(this, SingleVacationActivity.class);
-                startActivity(i);
-                return true;
-
-            case R.id.kostenrechner_activity:
-                Intent kostenrechner = new Intent(this, Kostenrechner.class);
-                startActivity(kostenrechner);
-                return true;
-
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }

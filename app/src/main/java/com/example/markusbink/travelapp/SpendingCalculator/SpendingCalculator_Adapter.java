@@ -1,4 +1,4 @@
-package com.example.markusbink.travelapp;
+package com.example.markusbink.travelapp.SpendingCalculator;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,16 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.markusbink.travelapp.R;
 
-public class Kostenrechner_Adapter extends ArrayAdapter<Kostenrechner_SingleItem> {
+import java.util.ArrayList;
+
+public class SpendingCalculator_Adapter extends ArrayAdapter<SpendingCalculator_SingleItem> {
 
 
     private Context context;
     private int resource;
 
-    public Kostenrechner_Adapter(Context context, int resource, ArrayList<Kostenrechner_SingleItem> objects) {
+    public SpendingCalculator_Adapter(Context context, int resource, ArrayList<SpendingCalculator_SingleItem> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
@@ -36,7 +37,7 @@ public class Kostenrechner_Adapter extends ArrayAdapter<Kostenrechner_SingleItem
 
 
         //create a person
-        Kostenrechner_SingleItem singleItem = new Kostenrechner_SingleItem(name, price);
+        SpendingCalculator_SingleItem singleItem = new SpendingCalculator_SingleItem(name, price);
         
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);

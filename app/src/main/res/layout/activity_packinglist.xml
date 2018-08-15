@@ -4,9 +4,20 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".Packliste"
-
+    tools:context=".PackingList.PackingList"
+    android:padding="25dp"
     >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Deine Packliste"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textColor="#000"
+        android:layout_marginBottom="20dp"
+        />
 
     <EditText
         android:id="@+id/editText_luggage"
@@ -17,7 +28,7 @@
 
     <Button
         android:id="@+id/button_add_luggage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_button"
         />

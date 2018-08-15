@@ -1,24 +1,26 @@
-package com.example.markusbink.travelapp;
+package com.example.markusbink.travelapp.SpendingCalculator;
 
 import android.content.Context;
+import android.drm.DrmStore;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.example.markusbink.travelapp.ActionBarActivity;
+import com.example.markusbink.travelapp.R;
+
 import java.util.ArrayList;
 
-public class Kostenrechner extends AppCompatActivity {
+public class SpendingCalculator extends ActionBarActivity {
 
     EditText editTextLabel, editTextPrice;
     Button buttonAdd;
-    ArrayList<Kostenrechner_SingleItem> arrayList = new ArrayList<>();
-    Kostenrechner_Adapter arrayAdapter;
+    ArrayList<SpendingCalculator_SingleItem> arrayList = new ArrayList<>();
+    SpendingCalculator_Adapter arrayAdapter;
     ListView listView;
     Context context;
 
@@ -39,9 +41,9 @@ public class Kostenrechner extends AppCompatActivity {
                 String name = editTextLabel.getText().toString();
                 String price = editTextPrice.getText().toString();
 
-                Kostenrechner_SingleItem newItem = new Kostenrechner_SingleItem(name, price);
+                SpendingCalculator_SingleItem newItem = new SpendingCalculator_SingleItem(name, price);
                 arrayList.add(newItem);
-                arrayAdapter = new Kostenrechner_Adapter(Kostenrechner.this, R.layout.singleitem_kostenrechner, arrayList);
+                arrayAdapter = new SpendingCalculator_Adapter(SpendingCalculator.this, R.layout.singleitem_kostenrechner, arrayList);
                 listView.setAdapter(arrayAdapter);
                 arrayAdapter.notifyDataSetChanged();
 
