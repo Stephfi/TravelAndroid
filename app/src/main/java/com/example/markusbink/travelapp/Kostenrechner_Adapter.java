@@ -37,6 +37,7 @@ public class Kostenrechner_Adapter extends ArrayAdapter<Kostenrechner_SingleItem
 
         //create a person
         Kostenrechner_SingleItem singleItem = new Kostenrechner_SingleItem(name, price);
+        
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         convertView = layoutInflater.inflate(resource,parent, false);
