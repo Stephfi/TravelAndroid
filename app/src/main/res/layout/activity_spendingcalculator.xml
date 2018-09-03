@@ -7,6 +7,17 @@
     android:padding="20dp"
     tools:context=".SpendingCalculator.SpendingCalculator">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dein Kostenrechner"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textColor="#000"
+        android:layout_marginBottom="20dp"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

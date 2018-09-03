@@ -17,7 +17,7 @@ public interface PackingListDao {
     void deleteItem(String item);
 
     @Query("SELECT * FROM packingItems")
-    PackingList_SingleItem[] selectAllItems();
+    PackingList_SingleItem[] selectAllPackingItems();
 
     @Query("DELETE FROM packingItems")
     void deleteAllItems();

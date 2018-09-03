@@ -35,7 +35,7 @@ public class SingleVacationActivity extends ActionBarActivity {
 
         Bundle extras = getIntent().getExtras();
 
-        if(extras != null){
+        if (extras != null) {
 
             String vacationName = extras.getString(Constants.VACATIONNAME);
             String startDate = extras.getString(Constants.STARTDATE);
@@ -59,43 +59,8 @@ public class SingleVacationActivity extends ActionBarActivity {
         });
 
 
-
-
-
-
-
-
-
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.start_activity:
-                Intent startIntent = new Intent(this, MainActivity.class);
-                startActivity(startIntent);
-                return true;
-
-            case R.id.packliste_activity:
-                Intent packlisteIntent = new Intent(this, PackingList.class);
-                startActivity(packlisteIntent);
-                return true;
-
-            case R.id.singlevacation_activity:
-                Intent i = new Intent(this, SingleVacationActivity.class);
-                startActivity(i);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
 
 

@@ -1,6 +1,7 @@
 package com.example.markusbink.travelapp.PackingList;
 
 import android.arch.persistence.room.Room;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -37,10 +38,10 @@ public class PackingList extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_packinglist);
-            initDB();
-            initUi();
-            initActionBar();
-            initListeners();
+        initDB();
+        initUi();
+        initActionBar();
+        initListeners();
 
         getSupportActionBar().setTitle("Packliste");
 
@@ -85,25 +86,24 @@ public class PackingList extends ActionBarActivity {
             public void run() {
 
                 if(!luggageItem.equals("")) {
-                PackingList_SingleItem packingItem = new PackingList_SingleItem();
-                packingItem.setItemName(luggageItem);
-                db.packingListInterface().insertItem(packingItem);
+                    PackingList_SingleItem packingItem = new PackingList_SingleItem();
+                    packingItem.setItemName(luggageItem);
 
-                Log.d(TAG, "run: Item added to Database");
+                    db.packingListInterface().insertItem(packingItem);
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-
-                        addItemToList(luggageItem);
-                        editTextLuggage.setText("");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 
 
-                        Log.d(TAG, "run: Item added to ListView");
-                    }
-                });
-            }}
+                            addItemToList(luggageItem);
+                            editTextLuggage.setText("");
+
+
+                            Log.d(TAG, "run: Item added to ListView");
+                        }
+                    });
+                }}
         }).start();
     }
 
@@ -145,25 +145,25 @@ public class PackingList extends ActionBarActivity {
             @Override
             public void run() {
 
-                
-              db.packingListInterface().deleteAllItems();
 
-              runOnUiThread(new Runnable() {
-                  @Override
-                  public void run() {
+                db.packingListInterface().deleteAllItems();
 
-                      if(luggageList.size() != 0) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
-                          luggageList.clear();
-                          luggageAdapter.notifyDataSetChanged();
+                        if(luggageList.size() != 0) {
 
-                          Toast.makeText(getApplicationContext(), "All Items have been removed", Toast.LENGTH_SHORT).show();
-                      } else {
-                          Toast.makeText(getApplicationContext(), "No Items to remove", Toast.LENGTH_SHORT).show();
+                            luggageList.clear();
+                            luggageAdapter.notifyDataSetChanged();
 
-                      }
-                  }
-              });
+                            Toast.makeText(getApplicationContext(), "All Items have been removed", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No Items to remove", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                });
 
 
             }
@@ -173,22 +173,23 @@ public class PackingList extends ActionBarActivity {
 
 
     private void initSavedItems() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
 
-                packingList = db.packingListInterface().selectAllItems();
-                for(PackingList_SingleItem item : packingList) {
-                    String itemName = item.getItemName();
-                   addItemToList(itemName);
-                }
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    packingList = db.packingListInterface().selectAllPackingItems();
 
+                        for(PackingList_SingleItem item : packingList) {
+                            String itemName = item.getItemName();
+                            addItemToList(itemName);
+                        }
 
-            }
-        }).start();
-
+                    }
+            }).start();
 
     }
+
+
 
 
 

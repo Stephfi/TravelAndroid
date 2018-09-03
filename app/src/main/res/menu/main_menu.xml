@@ -16,16 +16,11 @@
         app:showAsAction="never"
         />
 
-    <item android:id="@+id/packliste_activity"
+    <item android:id="@+id/packinglist_activity"
         android:title="Packliste"
         app:showAsAction="never"/>
 
-    <item android:id="@+id/singlevacation_activity"
-        android:title="Single Vacation Activity"
-        app:showAsAction="never"
-        />
-
-    <item android:id="@+id/kostenrechner_activity"
+    <item android:id="@+id/spendingcalculator_activity"
         android:title="Kostenrechner"
         app:showAsAction="never"
         />

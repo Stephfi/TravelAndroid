@@ -54,5 +54,13 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
+    //Hide MainActivity menu-item
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.start_activity).setVisible(false);
+        return true;
+    }
+
 
 }

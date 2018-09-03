@@ -43,17 +43,12 @@ public class ActionBarActivity extends AppCompatActivity {
                 startActivity(startIntent);
                 return true;
 
-            case R.id.packliste_activity:
+            case R.id.packinglist_activity:
                 Intent packlisteIntent = new Intent(this, PackingList.class);
                 startActivity(packlisteIntent);
                 return true;
 
-            case R.id.singlevacation_activity:
-                Intent i = new Intent(this, SingleVacationActivity.class);
-                startActivity(i);
-                return true;
-
-            case R.id.kostenrechner_activity:
+            case R.id.spendingcalculator_activity:
                 Intent kostenrechner = new Intent(this, SpendingCalculator.class);
                 startActivity(kostenrechner);
                 return true;
