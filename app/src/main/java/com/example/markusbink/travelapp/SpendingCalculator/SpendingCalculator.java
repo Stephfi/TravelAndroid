@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.markusbink.travelapp.ActionBarActivity;
+import com.example.markusbink.travelapp.Constants;
 import com.example.markusbink.travelapp.Database.RoomDatabase;
 import com.example.markusbink.travelapp.R;
 
@@ -22,7 +23,6 @@ import java.util.ArrayList;
 public class SpendingCalculator extends ActionBarActivity {
 
     private static final String TAG = "SpendingCalculator";
-    public static final String DATABASE_NAME = "spendingListDB";
 
     private EditText editTextLabel, editTextPrice;
     private TextView textViewTotal;
@@ -44,7 +44,7 @@ public class SpendingCalculator extends ActionBarActivity {
     }
 
     private RoomDatabase initDB() {
-        db = Room.databaseBuilder(SpendingCalculator.this, RoomDatabase.class, DATABASE_NAME).fallbackToDestructiveMigration().build();
+        db = Room.databaseBuilder(SpendingCalculator.this, RoomDatabase.class, Constants.DATABASENAME).fallbackToDestructiveMigration().build();
         return db;
     }
 
@@ -120,11 +120,20 @@ public class SpendingCalculator extends ActionBarActivity {
 
                     final SpendingCalculator_SingleItem spendingItem = new SpendingCalculator_SingleItem(labelItem, priceItem);
 
+                    Log.d(TAG, "run: addSingleSpendingToListView2");
 
                     // Sets the ID of the newest element in the list
-                    int lastListItemIndex = arrayList.size() - 1;
-                    int lastListItemId = arrayList.get(lastListItemIndex).getItemId() +1;
-                    spendingItem.setItemId(lastListItemId);
+                    try {
+
+                        int lastListItemIndex = arrayList.size() - 1;
+                        int lastListItemId = arrayList.get(lastListItemIndex).getItemId() + 1;
+                        spendingItem.setItemId(lastListItemId);
+
+                    }
+                    catch(Exception e) {
+                        Log.e(TAG, "Fatal Exception", e);
+                    }
+
 
                     Log.d(TAG, "run: addSingleSpendingToListView3");
 
