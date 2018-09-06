@@ -37,10 +37,10 @@ public class SpendingCalculator extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spendingcalculator);
-            initDB();
-            initUi();
-            initActionBar();
-            initListeners();
+        initDB();
+        initUi();
+        initActionBar();
+        initListeners();
     }
 
     private RoomDatabase initDB() {
@@ -105,7 +105,7 @@ public class SpendingCalculator extends ActionBarActivity {
         }).start();
 
 
-        }
+    }
 
     //Add a single Element to UI and DB
 
@@ -113,6 +113,7 @@ public class SpendingCalculator extends ActionBarActivity {
 
         final String labelItem = editTextLabel.getText().toString();
         final String priceItem = editTextPrice.getText().toString();
+
 
 
         if(!labelItem.equals("") && !priceItem.equals("")) {
@@ -128,8 +129,12 @@ public class SpendingCalculator extends ActionBarActivity {
 
                     // Sets the ID of the newest element in the list
                     int lastListItemIndex = arrayList.size() - 1;
-                    int lastListItemId = arrayList.get(lastListItemIndex).getItemId();
-                    spendingItem.setItemId(lastListItemId + 1);
+                    int lastListItemId = arrayList.get(lastListItemIndex).getItemId() +1;
+                    spendingItem.setItemId(lastListItemId);
+
+                    Log.d(TAG, "run: addSingleSpendingToListView3");
+
+
 
                     db.spendingCalculatorInterface().insertItem(spendingItem);
                     Log.d(TAG, "run: addSingleSpendingToView Method called");
@@ -185,7 +190,7 @@ public class SpendingCalculator extends ActionBarActivity {
 
                         Log.d(TAG, "Item removed from ListView");
 
-                       //Toast.makeText(getApplicationContext(), "Item has been removed", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Item has been removed", Toast.LENGTH_SHORT).show();
                         Toast.makeText(getApplicationContext(), "Item " + listViewPosition + " has been removed", Toast.LENGTH_SHORT).show();
 
 
@@ -206,7 +211,7 @@ public class SpendingCalculator extends ActionBarActivity {
 
 
     // Remove a Single Item to the List and Notify the DataSet
-        private void removeSingleSpending(int position) {
+    private void removeSingleSpending(int position) {
         arrayList.remove(position);
         arrayAdapter.notifyDataSetChanged();
     }
