@@ -55,7 +55,6 @@ public class SpendingCalculator extends ActionBarActivity {
             public void onClick(View v) {
 
                 addSingleSpendingToListView();
-                calculateTotal();
 
             }
         });
@@ -71,39 +70,34 @@ public class SpendingCalculator extends ActionBarActivity {
 
     }
 
+    private void increaseTotalValue(int amount) {
 
-    private void calculateTotal() {
+        int totalPrice = Integer.parseInt(textViewTotal.getText().toString());
+        totalPrice += amount;
 
-        final int itemPrice = Integer.parseInt(editTextPrice.getText().toString());
-        final int totalPrice = Integer.parseInt(textViewTotal.getText().toString());
-        final String updatedTotal = String.valueOf(totalPrice - itemPrice);
+        try {
+            textViewTotal.setText(String.valueOf(totalPrice));
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+        }
+        catch(Exception e) {
+            Log.e(TAG, "Fatal Exception", e);
+        }
 
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        try {
-                            textViewTotal.setText(updatedTotal);
-
-                        }
-                        catch(Exception e) {
-                            Log.e(TAG, "Fatal Exception", e);
-                        }
-
-                    }
-                });
+    }
 
 
+    private void decreaseTotalValue(int amount) {
 
+        int totalPrice = Integer.parseInt(textViewTotal.getText().toString());
+        totalPrice -= amount;
 
-            }
-        }).start();
+        try {
+            textViewTotal.setText(String.valueOf(totalPrice));
 
+        }
+        catch(Exception e) {
+            Log.e(TAG, "Fatal Exception", e);
+        }
 
     }
 
@@ -147,6 +141,7 @@ public class SpendingCalculator extends ActionBarActivity {
 
 
                             addItemToList(spendingItem);
+                            decreaseTotalValue(Integer.parseInt(priceItem));
                             editTextLabel.setText("");
                             editTextPrice.setText("");
 
@@ -171,6 +166,8 @@ public class SpendingCalculator extends ActionBarActivity {
         SpendingCalculator_SingleItem singleItem = (SpendingCalculator_SingleItem)listView.getItemAtPosition(position);
         final int listViewPosition = singleItem.getItemId();
 
+        final int itemPrice = Integer.parseInt(singleItem.getPrice());
+
 
 
         new Thread(new Runnable() {
@@ -187,6 +184,7 @@ public class SpendingCalculator extends ActionBarActivity {
                     public void run() {
 
                         removeSingleSpending(position);
+                        increaseTotalValue(itemPrice);
 
                         Log.d(TAG, "Item removed from ListView");
 
