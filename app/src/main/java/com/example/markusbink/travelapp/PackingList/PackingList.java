@@ -1,7 +1,6 @@
 package com.example.markusbink.travelapp.PackingList;
 
 import android.arch.persistence.room.Room;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.markusbink.travelapp.ActionBarActivity;
+import com.example.markusbink.travelapp.Constants;
 import com.example.markusbink.travelapp.Database.RoomDatabase;
 import com.example.markusbink.travelapp.R;
 
@@ -23,8 +23,6 @@ import java.util.ArrayList;
 public class PackingList extends ActionBarActivity {
 
     private static final String TAG = "PackingList";
-
-    private final String DATABASE_NAME = "packingListDB";
 
     private EditText editTextLuggage;
     private Button buttonLuggage;
@@ -51,7 +49,7 @@ public class PackingList extends ActionBarActivity {
 
     private RoomDatabase initDB() {
 
-        db = Room.databaseBuilder(PackingList.this, RoomDatabase.class, DATABASE_NAME).fallbackToDestructiveMigration().build();
+        db = Room.databaseBuilder(PackingList.this, RoomDatabase.class, Constants.DATABASENAME).fallbackToDestructiveMigration().build();
         return db;
     }
 
@@ -81,6 +79,7 @@ public class PackingList extends ActionBarActivity {
     private void addNewItemToListView() {
 
         final String luggageItem = editTextLuggage.getText().toString();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -103,7 +102,10 @@ public class PackingList extends ActionBarActivity {
                             Log.d(TAG, "run: Item added to ListView");
                         }
                     });
-                }}
+                } else {
+                    Log.d(TAG, "run: no value in input");
+                }
+            }
         }).start();
     }
 
@@ -221,12 +223,11 @@ public class PackingList extends ActionBarActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.packinglist_activity).setVisible(false);
         menu.findItem(R.id.deleteItems).setVisible(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
                 deleteAllIListItems();
-
                 return false;
             }
         });

@@ -33,6 +33,9 @@ public class SpendingCalculator extends ActionBarActivity {
     private SpendingCalculator_Adapter arrayAdapter;
     private RoomDatabase db;
 
+    private String budget = "250";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +57,7 @@ public class SpendingCalculator extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                addSingleSpendingToListView();
+                    addSingleSpendingToListView();
 
             }
         });
@@ -70,9 +73,9 @@ public class SpendingCalculator extends ActionBarActivity {
 
     }
 
-    private void increaseTotalValue(int amount) {
+    private void increaseTotalValue(float amount) {
 
-        int totalPrice = Integer.parseInt(textViewTotal.getText().toString());
+        float totalPrice = Integer.parseInt(textViewTotal.getText().toString());
         totalPrice += amount;
 
         try {
@@ -86,10 +89,12 @@ public class SpendingCalculator extends ActionBarActivity {
     }
 
 
-    private void decreaseTotalValue(int amount) {
+    private void decreaseTotalValue(float amount) {
 
-        int totalPrice = Integer.parseInt(textViewTotal.getText().toString());
+        float totalPrice = Float.parseFloat(textViewTotal.getText().toString());
+
         totalPrice -= amount;
+
 
         try {
             textViewTotal.setText(String.valueOf(totalPrice));
@@ -150,7 +155,7 @@ public class SpendingCalculator extends ActionBarActivity {
 
 
                             addItemToList(spendingItem);
-                            decreaseTotalValue(Integer.parseInt(priceItem));
+                            decreaseTotalValue(Float.parseFloat(priceItem));
                             editTextLabel.setText("");
                             editTextPrice.setText("");
 
@@ -175,7 +180,7 @@ public class SpendingCalculator extends ActionBarActivity {
         SpendingCalculator_SingleItem singleItem = (SpendingCalculator_SingleItem)listView.getItemAtPosition(position);
         final int listViewPosition = singleItem.getItemId();
 
-        final int itemPrice = Integer.parseInt(singleItem.getPrice());
+        final float itemPrice = Integer.parseInt(singleItem.getPrice());
 
 
 
@@ -244,6 +249,9 @@ public class SpendingCalculator extends ActionBarActivity {
                             arrayList.clear();
                             arrayAdapter.notifyDataSetChanged();
 
+                            textViewTotal.setText(budget);
+
+
                             Toast.makeText(getApplicationContext(), "All Items have been removed", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getApplicationContext(), "No Items to remove", Toast.LENGTH_SHORT).show();
@@ -266,7 +274,7 @@ public class SpendingCalculator extends ActionBarActivity {
         editTextLabel = (EditText)findViewById(R.id.editText_label);
         editTextPrice = (EditText)findViewById(R.id.editText_price);
         textViewTotal = (TextView)findViewById(R.id.textView_total);
-        textViewTotal.setText("250");
+        textViewTotal.setText(budget);
         buttonAdd = (Button)findViewById(R.id.button_add_price);
         listView = (ListView)findViewById(R.id.listView_prices);
         arrayAdapter = new SpendingCalculator_Adapter(SpendingCalculator.this, R.layout.singleitem_spendingcalculator, arrayList);
@@ -289,12 +297,12 @@ public class SpendingCalculator extends ActionBarActivity {
 
                 Log.d(TAG, "run: init saved items");
 
-                int spendingAmount = 0;
-                int currentTotal = Integer.parseInt(textViewTotal.getText().toString());
+                float spendingAmount = 0;
+                float currentTotal = Float.parseFloat(textViewTotal.getText().toString());
 
                 for(SpendingCalculator_SingleItem singleItem : spendingList) {
 
-                    spendingAmount += Integer.parseInt(singleItem.getPrice());
+                    spendingAmount += Float.parseFloat(singleItem.getPrice());
 
                 }
 

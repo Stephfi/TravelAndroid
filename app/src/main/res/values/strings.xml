@@ -3,6 +3,15 @@
     <string name="vacation_name">Name der Reise eingeben</string>
     <string name="reise_planen">Reise planen</string>
     <string name="add_button">Hinzufügen</string>
+    <string name="success_headline">Herzlichen Glückwunsch!</string>
+    <string name="success_subheadline">Ihre Reise wurde erfolgreich erstellt.</string>
+    <string name="back_to_mainactivity">Zurück zur Eingabe</string>
+    <string name="date_start">Beginn der Reise</string>
+    <string name="date_end">Ende der Reise</string>
+    <string name="mainactivity_headline">Plane deine Reise</string>
+    <string name="packinglist_headline">Deine Packliste</string>
+    <string name="packinglist_item_placeholder">Gepäck eingeben</string>
+    <string name="budget">0 €</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

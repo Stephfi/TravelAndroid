@@ -25,7 +25,7 @@ public class SingleVacationActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singlevacation);
 
-        getSupportActionBar().setTitle("SingleVacationActivity");
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         textViewVacationName = (TextView) findViewById(R.id.textview_vacation_name);
