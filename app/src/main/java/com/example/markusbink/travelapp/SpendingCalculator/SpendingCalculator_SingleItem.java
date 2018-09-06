@@ -45,4 +45,5 @@ public class SpendingCalculator_SingleItem {
     public void setPrice(String price) {
         this.price = price;
     }
+
 }

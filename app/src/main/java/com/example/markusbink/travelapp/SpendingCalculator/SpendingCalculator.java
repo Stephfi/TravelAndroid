@@ -1,7 +1,6 @@
 package com.example.markusbink.travelapp.SpendingCalculator;
 
 import android.arch.persistence.room.Room;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,12 +10,11 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.markusbink.travelapp.ActionBarActivity;
 import com.example.markusbink.travelapp.Database.RoomDatabase;
-import com.example.markusbink.travelapp.PackingList.PackingList;
-import com.example.markusbink.travelapp.PackingList.PackingList_SingleItem;
 import com.example.markusbink.travelapp.R;
 
 import java.util.ArrayList;
@@ -27,6 +25,7 @@ public class SpendingCalculator extends ActionBarActivity {
     public static final String DATABASE_NAME = "spendingListDB";
 
     private EditText editTextLabel, editTextPrice;
+    private TextView textViewTotal;
     private Button buttonAdd;
     private ListView listView;
     private ArrayList<SpendingCalculator_SingleItem> arrayList = new ArrayList<>();
@@ -56,6 +55,7 @@ public class SpendingCalculator extends ActionBarActivity {
             public void onClick(View v) {
 
                 addSingleSpendingToListView();
+                calculateTotal();
 
             }
         });
@@ -71,6 +71,42 @@ public class SpendingCalculator extends ActionBarActivity {
 
     }
 
+
+    private void calculateTotal() {
+
+        final int itemPrice = Integer.parseInt(editTextPrice.getText().toString());
+        final int totalPrice = Integer.parseInt(textViewTotal.getText().toString());
+        final String updatedTotal = String.valueOf(totalPrice - itemPrice);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        try {
+                            textViewTotal.setText(updatedTotal);
+
+                        }
+                        catch(Exception e) {
+                            Log.e(TAG, "Fatal Exception", e);
+                        }
+
+                    }
+                });
+
+
+
+
+            }
+        }).start();
+
+
+        }
+
     //Add a single Element to UI and DB
 
     private void addSingleSpendingToListView() {
@@ -78,14 +114,25 @@ public class SpendingCalculator extends ActionBarActivity {
         final String labelItem = editTextLabel.getText().toString();
         final String priceItem = editTextPrice.getText().toString();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+
+        if(!labelItem.equals("") && !priceItem.equals("")) {
+
+            // Thread starts here
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
 
                     final SpendingCalculator_SingleItem spendingItem = new SpendingCalculator_SingleItem(labelItem, priceItem);
 
+
+                    // Sets the ID of the newest element in the list
+                    int lastListItemIndex = arrayList.size() - 1;
+                    int lastListItemId = arrayList.get(lastListItemIndex).getItemId();
+                    spendingItem.setItemId(lastListItemId + 1);
+
                     db.spendingCalculatorInterface().insertItem(spendingItem);
-                Log.d(TAG, "run: addSingleSpendingToView Method called");
+                    Log.d(TAG, "run: addSingleSpendingToView Method called");
 
                     Log.d(TAG, "run: Item added to Database");
 
@@ -98,24 +145,33 @@ public class SpendingCalculator extends ActionBarActivity {
                             editTextLabel.setText("");
                             editTextPrice.setText("");
 
-
-                            Log.d(TAG, "run: Item added to ListView");
                         }
                     });
                 }
-        }).start();
+
+
+            }).start();
+            //Thread ends here
+
+        } else {
+            Toast.makeText(getApplicationContext(), "Bitte Art und Wert eingeben.", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     // Remove a single item from database and list
     private void removeSingleSpendingFromListView(final int position) {
 
+        SpendingCalculator_SingleItem singleItem = (SpendingCalculator_SingleItem)listView.getItemAtPosition(position);
+        final int listViewPosition = singleItem.getItemId();
+
+
+
         new Thread(new Runnable() {
             @Override
             public void run() {
 
-                final int listViewPosition = position + 1;
-
-                final String itemPosition = String.valueOf(listViewPosition);
 
                 db.spendingCalculatorInterface().deleteSpendingItem(listViewPosition);
 
@@ -124,12 +180,14 @@ public class SpendingCalculator extends ActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        arrayList.remove(position);
-                        arrayAdapter.notifyDataSetChanged();
+
+                        removeSingleSpending(position);
 
                         Log.d(TAG, "Item removed from ListView");
 
-                        Toast.makeText(getApplicationContext(), "Item has been removed", Toast.LENGTH_SHORT).show();
+                       //Toast.makeText(getApplicationContext(), "Item has been removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Item " + listViewPosition + " has been removed", Toast.LENGTH_SHORT).show();
+
 
 
 
@@ -140,17 +198,20 @@ public class SpendingCalculator extends ActionBarActivity {
     }
 
 
+    // Add a Single Item to the List and Notify the DataSet
     private void addItemToList(SpendingCalculator_SingleItem itemName) {
         arrayList.add(itemName);
         arrayAdapter.notifyDataSetChanged();
     }
 
-    private void removeSingleSpending(int position) {
+
+    // Remove a Single Item to the List and Notify the DataSet
+        private void removeSingleSpending(int position) {
         arrayList.remove(position);
         arrayAdapter.notifyDataSetChanged();
     }
 
-
+    // Deletes all items in DB and List
     private void deleteAllListItems() {
 
         Log.d(TAG, "deleteAllIListItems: deleted");
@@ -187,9 +248,13 @@ public class SpendingCalculator extends ActionBarActivity {
 
     }
 
+
+    //Initializes every UI component
     private void initUi(){
         editTextLabel = (EditText)findViewById(R.id.editText_label);
         editTextPrice = (EditText)findViewById(R.id.editText_price);
+        textViewTotal = (TextView)findViewById(R.id.textView_total);
+        textViewTotal.setText("250");
         buttonAdd = (Button)findViewById(R.id.button_add_price);
         listView = (ListView)findViewById(R.id.listView_prices);
         arrayAdapter = new SpendingCalculator_Adapter(SpendingCalculator.this, R.layout.singleitem_spendingcalculator, arrayList);
@@ -198,6 +263,7 @@ public class SpendingCalculator extends ActionBarActivity {
 
     }
 
+    // Populates the UI with saved data from Database
     private void initSavedItems() {
 
         new Thread(new Runnable() {
@@ -209,10 +275,23 @@ public class SpendingCalculator extends ActionBarActivity {
                     addItemToList(singleItem);
                 }
 
+                Log.d(TAG, "run: init saved items");
+
+                int spendingAmount = 0;
+                int currentTotal = Integer.parseInt(textViewTotal.getText().toString());
+
+                for(SpendingCalculator_SingleItem singleItem : spendingList) {
+
+                    spendingAmount += Integer.parseInt(singleItem.getPrice());
+
+                }
+
+                String newTotal = String.valueOf(currentTotal - spendingAmount);
+                textViewTotal.setText(newTotal);
+
 
             }
         }).start();
-
 
 
     }
@@ -227,7 +306,7 @@ public class SpendingCalculator extends ActionBarActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        menu.findItem(R.id.packinglist_activity).setVisible(false);
+        menu.findItem(R.id.spendingcalculator_activity).setVisible(false);
         menu.findItem(R.id.deleteItems).setVisible(true).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

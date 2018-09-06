@@ -38,6 +38,8 @@ public class SpendingCalculator_Adapter extends ArrayAdapter<SpendingCalculator_
 
         //create a person
         SpendingCalculator_SingleItem singleItem = new SpendingCalculator_SingleItem(name, price);
+        singleItem.setName(name);
+        singleItem.setPrice(price);
         
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -47,7 +49,7 @@ public class SpendingCalculator_Adapter extends ArrayAdapter<SpendingCalculator_
         TextView textViewPrice = (TextView) convertView.findViewById(R.id.textview_kostenrechner_price);
 
         textViewName.setText(name);
-        textViewPrice.setText(price);
+        textViewPrice.setText(price + " €");
 
         return convertView;
 
