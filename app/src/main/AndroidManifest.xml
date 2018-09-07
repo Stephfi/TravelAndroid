@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+      
         <activity android:name=".MainActivity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,14 +19,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ActionBarActivity"/>
+
         <activity android:name=".SingleVacationActivity"
-            android:parentActivityName=".MainActivity.MainActivity"/>
+                  android:parentActivityName=".MainActivity"/>
+
         <activity android:name=".PackingList.PackingList"
-            android:parentActivityName=".MainActivity.MainActivity"/>
+                  android:parentActivityName=".MainActivity"/>
+
         <activity android:name=".SpendingCalculator.SpendingCalculator"
-            android:parentActivityName=".MainActivity.MainActivity"/>
-        <activity android:name=".Weather.Weather"/>
+                  android:parentActivityName=".MainActivity"/>
+
+        <activity android:name=".Routeplaner.FirstscreenRouteplaner">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Routeplaner.SecondscreenRouteplaner">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.ALTERNATIVE."/>
+            </intent-filter>
+        </activity>
+      
+      <activity android:name=".Weather.Weather"/>
+      
     </application>
 
 </manifest>
