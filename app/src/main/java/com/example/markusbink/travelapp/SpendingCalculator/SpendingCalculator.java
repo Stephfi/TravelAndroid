@@ -75,7 +75,7 @@ public class SpendingCalculator extends ActionBarActivity {
 
     private void increaseTotalValue(float amount) {
 
-        float totalPrice = Integer.parseInt(textViewTotal.getText().toString());
+        float totalPrice = Float.parseFloat(textViewTotal.getText().toString());
         totalPrice += amount;
 
         try {
@@ -179,8 +179,9 @@ public class SpendingCalculator extends ActionBarActivity {
 
         SpendingCalculator_SingleItem singleItem = (SpendingCalculator_SingleItem)listView.getItemAtPosition(position);
         final int listViewPosition = singleItem.getItemId();
+        final String listViewName = singleItem.getName();
 
-        final float itemPrice = Integer.parseInt(singleItem.getPrice());
+        final float itemPrice = Float.parseFloat(singleItem.getPrice());
 
 
 
@@ -203,7 +204,7 @@ public class SpendingCalculator extends ActionBarActivity {
                         Log.d(TAG, "Item removed from ListView");
 
                         //Toast.makeText(getApplicationContext(), "Item has been removed", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getApplicationContext(), "Item " + listViewPosition + " has been removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Item " + listViewName + " has been removed", Toast.LENGTH_SHORT).show();
 
 
 
