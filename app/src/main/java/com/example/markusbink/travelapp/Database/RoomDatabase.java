@@ -2,7 +2,7 @@ package com.example.markusbink.travelapp.Database;
 
 import android.arch.persistence.room.Database;
 
-import com.example.markusbink.travelapp.MainActivity_SingleItem;
+import com.example.markusbink.travelapp.MainActivity.MainActivity_SingleItem;
 import com.example.markusbink.travelapp.PackingList.PackingList_SingleItem;
 import com.example.markusbink.travelapp.SpendingCalculator.SpendingCalculator_SingleItem;
 

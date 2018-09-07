@@ -195,12 +195,7 @@ public class PackingList extends ActionBarActivity {
     private void initActionBar() {
 
         if(getSupportActionBar() != null) {
-
-            try {
-                getSupportActionBar().setTitle("Packliste");
-            } catch (NullPointerException e) {
-                Log.d(TAG, "NullPointerException handled");
-            }
+            getSupportActionBar().setTitle("Packliste");
         }
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

@@ -5,7 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import com.example.markusbink.travelapp.MainActivity_SingleItem;
+import com.example.markusbink.travelapp.MainActivity.MainActivity_SingleItem;
 
 @Dao
 public interface MainActivityDao {
