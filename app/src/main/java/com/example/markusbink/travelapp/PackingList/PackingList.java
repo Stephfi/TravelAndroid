@@ -41,10 +41,6 @@ public class PackingList extends ActionBarActivity {
         initActionBar();
         initListeners();
 
-        getSupportActionBar().setTitle("Packliste");
-
-
-
     }
 
     private RoomDatabase initDB() {
@@ -80,11 +76,13 @@ public class PackingList extends ActionBarActivity {
 
         final String luggageItem = editTextLuggage.getText().toString();
 
+
+        if(!luggageItem.equals("")) {
         new Thread(new Runnable() {
             @Override
             public void run() {
 
-                if(!luggageItem.equals("")) {
+
                     PackingList_SingleItem packingItem = new PackingList_SingleItem();
                     packingItem.setItemName(luggageItem);
 
@@ -94,19 +92,18 @@ public class PackingList extends ActionBarActivity {
                         @Override
                         public void run() {
 
-
                             addItemToList(luggageItem);
                             editTextLuggage.setText("");
 
-
-                            Log.d(TAG, "run: Item added to ListView");
                         }
                     });
-                } else {
-                    Log.d(TAG, "run: no value in input");
                 }
-            }
+
         }).start();
+
+        } else {
+            Toast.makeText(getApplicationContext(), "Bitte Textfeld ausfüllen.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void removeItemFromListView(final int position) {
@@ -118,17 +115,13 @@ public class PackingList extends ActionBarActivity {
 
                 db.packingListInterface().deleteItem(itemName);
 
-                Log.d(TAG, "Item removed from Database");
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         luggageList.remove(position);
                         luggageAdapter.notifyDataSetChanged();
 
-                        Log.d(TAG, "Item removed from ListView");
-
-                        Toast.makeText(getApplicationContext(), "Item has been removed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Eintrag wurde entfernt", Toast.LENGTH_SHORT).show();
 
                     }
                 });
@@ -140,8 +133,6 @@ public class PackingList extends ActionBarActivity {
     // Remove all Items from database and list
 
     public void deleteAllIListItems() {
-
-        Log.d(TAG, "deleteAllIListItems: deleted");
 
         new Thread(new Runnable() {
             @Override
@@ -159,9 +150,9 @@ public class PackingList extends ActionBarActivity {
                             luggageList.clear();
                             luggageAdapter.notifyDataSetChanged();
 
-                            Toast.makeText(getApplicationContext(), "All Items have been removed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Alle Einträge wurden entfernt", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getApplicationContext(), "No Items to remove", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Keine Einträge gefunden.", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -202,16 +193,20 @@ public class PackingList extends ActionBarActivity {
     }
 
     private void initActionBar() {
-        getSupportActionBar().setTitle("PackingList");
+
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Packliste");
+        }
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
 
     private void initUi() {
-        editTextLuggage = (EditText) findViewById(R.id.editText_luggage);
-        buttonLuggage = (Button) findViewById(R.id.button_add_luggage);
-        listViewLuggage = (ListView) findViewById(R.id.listView_luggage);
+        editTextLuggage = findViewById(R.id.editText_luggage);
+        buttonLuggage = findViewById(R.id.button_add_luggage);
+        listViewLuggage = findViewById(R.id.listView_luggage);
         luggageAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,luggageList);
         listViewLuggage.setAdapter(luggageAdapter);
         initSavedItems();

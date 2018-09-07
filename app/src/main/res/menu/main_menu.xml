@@ -25,5 +25,10 @@
         app:showAsAction="never"
         />
 
+    <item android:id="@+id/weather_activity"
+        android:title="Wetter"
+        app:showAsAction="never"
+        />
+
 
 </menu>

@@ -7,10 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 
+import com.example.markusbink.travelapp.MainActivity.MainActivity;
 import com.example.markusbink.travelapp.PackingList.PackingList;
 import com.example.markusbink.travelapp.SpendingCalculator.SpendingCalculator;
+import com.example.markusbink.travelapp.Weather.Weather;
 
 public class ActionBarActivity extends AppCompatActivity {
 
@@ -51,6 +52,11 @@ public class ActionBarActivity extends AppCompatActivity {
             case R.id.spendingcalculator_activity:
                 Intent kostenrechner = new Intent(this, SpendingCalculator.class);
                 startActivity(kostenrechner);
+                return true;
+
+            case R.id.weather_activity:
+                Intent weather = new Intent(this, Weather.class);
+                startActivity(weather);
                 return true;
 
 
