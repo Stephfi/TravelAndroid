@@ -43,6 +43,7 @@ public class Weather extends ActionBarActivity {
         initActionBar();
 
 
+
         mQueue = Volley.newRequestQueue(this);
 
 
@@ -54,9 +55,13 @@ public class Weather extends ActionBarActivity {
 
                 if(city.equals("")) {
                     Toast.makeText(getApplicationContext(), "Bitte Ort eingeben.", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    jsonParse(city);
+
                 }
 
-                jsonParse(city);
+
                 editTextCity.setText("");
             }
         });
@@ -70,6 +75,9 @@ public class Weather extends ActionBarActivity {
         String url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=08b0554d25e979ac4f422baf20a69306&units=metric";
 
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+
+
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -91,6 +99,7 @@ public class Weather extends ActionBarActivity {
                     String country = sys.getString("country");
                     String city = response.getString("name");
 
+
                     String cityCountryString = city + ", " + country;
 
 
@@ -103,14 +112,24 @@ public class Weather extends ActionBarActivity {
 
 
 
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
+
+
+
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+
+
+                    Toast.makeText(getApplicationContext(), "Angegebener Ort konnte nicht gefunden werden.", Toast.LENGTH_LONG).show();
+
+
             }
         });
 
@@ -119,11 +138,9 @@ public class Weather extends ActionBarActivity {
     }
 
 
-
-
-
-
-
+    private void initWeather() {
+        jsonParse("Regensburg");
+    }
 
     private void initUi() {
         textViewTemp = findViewById(R.id.textview_temperature);
