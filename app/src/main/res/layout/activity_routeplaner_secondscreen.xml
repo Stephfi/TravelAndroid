@@ -24,7 +24,9 @@
         android:layout_below="@+id/identifyRoute"
         android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:text="@string/start"
+        android:textColor="@color/textColor"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/RecyclerView"

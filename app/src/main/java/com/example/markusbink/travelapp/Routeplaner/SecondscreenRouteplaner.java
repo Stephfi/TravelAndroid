@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import com.example.markusbink.travelapp.R;
 
 
-
-
 public class SecondscreenRouteplaner extends AppCompatActivity {
 
         TextView routeIdentity, firstDestination;
