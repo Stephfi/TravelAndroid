@@ -15,5 +15,8 @@ public interface EntityThreeDao {
 
     @Query("DELETE FROM routeThree")
     void deleteAllPartsFromRouteThree();
+
+    @Query("DELETE FROM routeThree WHERE id3 = :id3")
+    void deleteSelectedItemFromRouteThree(int id3);
 }
 

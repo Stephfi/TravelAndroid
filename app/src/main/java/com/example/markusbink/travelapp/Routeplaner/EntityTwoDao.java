@@ -16,4 +16,7 @@ public interface EntityTwoDao {
     @Query("DELETE FROM routeTwo")
     void deleteAllPartsFromRouteTwo();
 
+    @Query("DELETE FROM routetwo WHERE id2 = :id2")
+    void deleteSelectedItemFromRouteTwo(int id2);
+
 }

@@ -11,9 +11,12 @@ public interface EntityOneDao {
     void insertPartsOfRouteOne(RoutePlaner_EntityOne routePlanerEntityOne);
 
     @Query("SELECT * FROM routeOne")
-    RoutePlaner_EntityOne[] selectAllItems();
+    RoutePlaner_EntityOne[] selectAllItemsFromRouteOne();
 
     @Query("DELETE FROM routeOne")
-    void deleteAllItems();
+    void deleteAllItemsFromRouteOne();
+
+    @Query("DELETE FROM routeOne WHERE id = :id")
+    void deleteSelectedItemFromRouteOne(int id);
 
 }
