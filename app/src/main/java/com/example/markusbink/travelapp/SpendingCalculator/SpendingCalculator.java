@@ -86,33 +86,16 @@ public class SpendingCalculator extends ActionBarActivity {
         catch(Exception e) {
             Log.e(TAG, "Increase Total Value Exception", e);
         }
-
-
     }
 
 
-    private void decreaseTotalValue(double amount) {
+    private double decreaseTotalValue(double amount) {
 
         double totalPrice = Double.parseDouble(textViewTotal.getText().toString());
 
+        totalPrice -= amount;
 
-        if(totalPrice > 0) {
-            totalPrice -= amount;
-            Toast.makeText(getApplicationContext(), totalPrice + "übrig", Toast.LENGTH_SHORT).show();
-
-            try {
-                textViewTotal.setText(String.valueOf(totalPrice));
-
-            }
-            catch(Exception e) {
-                Log.e(TAG, "Decrease Total Value Exception", e);
-            }
-
-        } else {
-            Toast.makeText(getApplicationContext(), "Dein Budget ist verbraucht.", Toast.LENGTH_SHORT).show();
-        }
-
-
+            return totalPrice;
 
 
     }
@@ -127,7 +110,11 @@ public class SpendingCalculator extends ActionBarActivity {
         //Replaces comma as decimal separator with a dot
         final String priceItem = editTextPrice.getText().toString().replace(',', '.');
 
+
+
         if(!labelItem.equals("") && !priceItem.equals("")) {
+
+            final double totalPrice = decreaseTotalValue(Double.parseDouble(priceItem));
 
             // Thread starts here
             new Thread(new Runnable() {
@@ -149,20 +136,44 @@ public class SpendingCalculator extends ActionBarActivity {
                         Log.e(TAG, "Fatal Exception", e);
                     }
 
-                    db.spendingCalculatorInterface().insertItem(spendingItem);
+                    if(totalPrice > 0) {
+                        db.spendingCalculatorInterface().insertItem(spendingItem);
 
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
 
-                            addItemToList(spendingItem);
-                            decreaseTotalValue(Double.parseDouble(priceItem));
-                            editTextLabel.setText("");
-                            editTextPrice.setText("");
+                                Toast.makeText(getApplicationContext(), totalPrice + "übrig", Toast.LENGTH_SHORT).show();
+
+                                try {
+                                    textViewTotal.setText(String.valueOf(totalPrice));
+
+                                }
+                                catch(Exception e) {
+                                    Log.e(TAG, "Decrease Total Value Exception", e);
+                                }
+
+
+                                addItemToList(spendingItem);
+                                editTextLabel.setText("");
+                                editTextPrice.setText("");
 
                         }
                     });
+
+                    } else {
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "Kein Budget mehr übrig.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+                    }
+
                 }
 
 
@@ -291,8 +302,6 @@ public class SpendingCalculator extends ActionBarActivity {
                 for(SpendingCalculator_SingleItem singleItem : spendingList) {
                     addItemToList(singleItem);
                 }
-
-                Log.d(TAG, "run: init saved items");
 
                 double spendingAmount = 0;
                 double currentTotal = Double.parseDouble(textViewTotal.getText().toString());
