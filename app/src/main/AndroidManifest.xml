@@ -23,13 +23,13 @@
         <activity android:name=".ActionBarActivity"/>
 
         <activity android:name=".SingleVacationActivity"
-                  android:parentActivityName=".MainActivity"/>
+                  android:parentActivityName=".MainActivity.MainActivity"/>
 
         <activity android:name=".PackingList.PackingList"
-                  android:parentActivityName=".MainActivity"/>
+                  android:parentActivityName=".MainActivity.MainActivity"/>
 
         <activity android:name=".SpendingCalculator.SpendingCalculator"
-                  android:parentActivityName=".MainActivity"/>
+                  android:parentActivityName=".MainActivity.MainActivity"/>
 
         <activity android:name=".Routeplaner.FirstscreenRouteplaner">
             <intent-filter>

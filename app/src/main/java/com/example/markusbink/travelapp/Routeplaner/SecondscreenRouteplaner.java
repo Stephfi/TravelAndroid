@@ -15,12 +15,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+
+import com.example.markusbink.travelapp.ActionBarActivity;
 import com.example.markusbink.travelapp.R;
 
 
 
 
-public class SecondscreenRouteplaner extends AppCompatActivity {
+public class SecondscreenRouteplaner extends ActionBarActivity {
 
         TextView routeIdentity, firstDestination;
         EditText enterNewDestination;

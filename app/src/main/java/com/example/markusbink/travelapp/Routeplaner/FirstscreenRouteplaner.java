@@ -2,15 +2,19 @@ package com.example.markusbink.travelapp.Routeplaner;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.markusbink.travelapp.ActionBarActivity;
 import com.example.markusbink.travelapp.R;
 
 
-public class FirstscreenRouteplaner extends AppCompatActivity {
+public class FirstscreenRouteplaner extends ActionBarActivity {
 
     TextView routeOne, routeTwo, routeThree;
     Button buttonOne, buttonTwo, buttonThree;
@@ -65,4 +69,13 @@ public class FirstscreenRouteplaner extends AppCompatActivity {
             }
         });
     }
+
+    //Hide Route menu item
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        menu.findItem(R.id.route_activity).setVisible(false);
+        return true;
+    }
+
 }
