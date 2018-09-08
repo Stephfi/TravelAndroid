@@ -7,36 +7,148 @@
     tools:context=".MainActivity.MainActivity"
     android:orientation="vertical"
     android:padding="25dp"
-    android:gravity="center">
+    android:background="#eee">
+
+    <EditText
+        android:id="@+id/edittext_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:hint="@string/weather_input"
+        android:padding="16dp"
+        />
+
+    <Button
+        android:id="@+id/button_show_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/weather_show"
+        android:textSize="20sp"
+        android:padding="16dp"
+        android:background="@color/colorAccent"
+        android:textColor="#fff"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/textview_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Regensburg, DE"
+            android:textAlignment="center"/>
 
     <TextView
         android:id="@+id/textview_temperature"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="30"
+        android:text="30°"
         android:textAlignment="center"
-        android:textSize="45sp"
-        android:textStyle="bold"
-        android:textColor="#000"
+        android:textSize="75sp"
+        android:textColor="@color/colorAccent"
         />
 
-    <TextView
-        android:id="@+id/textview_wind"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Wind"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="40dp">
 
-    <TextView
-        android:id="@+id/textview_cloud"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cloud"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.5">
 
-    <TextView
-        android:id="@+id/textview_pressure"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pressure"/>
+        <TextView
+            android:id="@+id/textview_pressure_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Luftdruck in hPa"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/textview_pressure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textview_pressure_label"
+            android:text="1020"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textAlignment="center"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.5">
+
+        <TextView
+            android:id="@+id/textview_humidity_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Luftfeuchtigkeit in %"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/textview_humidity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="65"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textAlignment="center"
+            android:layout_below="@id/textview_humidity_label"/>
+
+
+        </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/textview_wind_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Windgeschwindigkeit in m/s"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:id="@+id/textview_wind"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="34 m/s"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:textAlignment="center"
+                    android:layout_below="@id/textview_wind_label"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </LinearLayout>

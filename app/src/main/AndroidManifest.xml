@@ -47,7 +47,8 @@
             </intent-filter>
         </activity>
       
-      <activity android:name=".Weather.Weather"/>
+      <activity android:name=".Weather.Weather"
+          android:parentActivityName=".MainActivity.MainActivity"/>
       
     </application>
 

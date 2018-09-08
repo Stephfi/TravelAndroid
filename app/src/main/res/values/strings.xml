@@ -11,6 +11,8 @@
     <string name="mainactivity_headline">Plane deine Reise</string>
     <string name="packinglist_headline">Deine Packliste</string>
     <string name="packinglist_item_placeholder">Gepäck eingeben</string>
+    <string name="weather_show">Wetter anzeigen</string>
+    <string name="weather_input">Bitte Ort eingeben</string>
     <string name="budget">0 €</string>
 
     <!-- TODO: Remove or change this placeholder text -->
