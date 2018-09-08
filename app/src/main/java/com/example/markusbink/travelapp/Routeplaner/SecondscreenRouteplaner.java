@@ -20,9 +20,8 @@ import com.example.markusbink.travelapp.ActionBarActivity;
 import com.example.markusbink.travelapp.R;
 
 
-
-
 public class SecondscreenRouteplaner extends ActionBarActivity {
+
 
         TextView routeIdentity, firstDestination;
         EditText enterNewDestination;

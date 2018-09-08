@@ -26,6 +26,7 @@
     <string name="arrow_down">arrow down</string>
     <string name="delete_all_icon_title">Delete</string>
     <string name="next_destination">Nächstes Ziel</string>
+    <string name="start">Start</string>
 
     <string-array name="transportation">
         <item>(Wähle Verkehrsmittel)</item>
