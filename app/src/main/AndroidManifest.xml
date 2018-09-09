@@ -20,17 +20,14 @@
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name=".MainActivity.MyReceiver"
-            android:enabled="true"
-            android:exported="false" >
-        </receiver>
+        <activity android:name=".SingleVacationActivityInfo" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-        <service
-            android:name=".MainActivity.MyIntentService"
-            android:exported="false"
-            android:permission="android.permission.BIND_JOB_SERVICE">
-        </service>
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
+
 
         <activity android:name=".ActionBarActivity"/>
 
