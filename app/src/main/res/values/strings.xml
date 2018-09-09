@@ -46,5 +46,8 @@
     </string-array>
     
     <string name="channel_name">Trip</string>
-    <string name="channel_description">Next trip starts soon!</string>
+    <string name="channel_description">Next Trip is starting soon!</string>
+    <string name="notify_text">Geplante Reise steht bevor!</string>
+    <string name="notify_title">Reise</string>
+
 </resources>

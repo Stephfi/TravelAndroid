@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ import com.example.markusbink.travelapp.Constants;
 import com.example.markusbink.travelapp.Database.RoomDatabase;
 import com.example.markusbink.travelapp.R;
 import com.example.markusbink.travelapp.SingleVacationActivity;
+import com.example.markusbink.travelapp.SingleVacationActivityInfo;
 import com.facebook.stetho.Stetho;
 
 import java.util.Calendar;
@@ -48,8 +50,7 @@ public class MainActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_main);
 
-        createNotificationChannel();
-        createNotification();
+        initNotification();
 
         initDB();
         initUi();
@@ -58,29 +59,35 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    //Creates the Notification Channel
-    private void createNotificationChannel() {
+    private void initNotification(){
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
             CharSequence name = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
             NotificationChannel channel = new NotificationChannel(Constants.CHANNEL_ID, name, importance);
             channel.setDescription(description);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
+
+            NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.createNotificationChannel(channel);
         }
+
+        Intent intent = new Intent(getApplicationContext(), SingleVacationActivityInfo.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, Constants.CHANNEL_ID);
+        mBuilder.setSmallIcon(R.drawable.ic_action_event)
+                .setContentText(getString(R.string.notify_text))
+                .setContentTitle(getString(R.string.notify_title))
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent);
+
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(1, mBuilder.build());
     }
 
-    private void createNotification(){
-
-        Intent notifyIntent = new Intent(this, MyReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast
-                (context,  notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  System.currentTimeMillis(),
-                1000 * 60 * 60 * 24 * 3, pendingIntent);
-    }
 
     //Hide MainActivity menu-item
     @Override
