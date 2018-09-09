@@ -3,7 +3,6 @@ package com.example.markusbink.travelapp.Routeplaner;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -17,11 +16,17 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import com.example.markusbink.travelapp.ActionBarActivity;
+import com.example.markusbink.travelapp.Constants;
 import com.example.markusbink.travelapp.R;
 
+/*
+For the work with the RecyclerView and the Adapter, three videos were the source for
+information and inspiration. Some major changes were made. Retrieved between August 1st 2018
+and September 8th 2018.  https://www.youtube.com/watch?v=CTBiwKlO5IU
+https://www.youtube.com/watch?v=3CG-iXdje6E,  https://www.youtube.com/watch?v=ijx4sZVAdHw&t
+ */
 
 public class SecondscreenRouteplaner extends ActionBarActivity {
-
 
         TextView routeIdentity, firstDestination;
         EditText enterNewDestination;
@@ -32,16 +37,14 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
         RecyclerView.Adapter recyclerViewAdapter;
         RecyclerView.LayoutManager recyclerViewLayoutManager;
 
-
         private RoutePlaner_EntityOne[] routeOneList;
         private RoutePlaner_EntityTwo[] routeTwoList;
         private RoutePlaner_EntityThree[] routeThreeList;
 
-
-        private ArrayList<RoutePlaner_EntityOne> routePlanerEntityOne;
-        private ArrayList<RoutePlaner_EntityTwo> routePlanerEntityTwo;
-        private ArrayList<RoutePlaner_EntityThree> routePlanerEntityThree;
-        private AppDatabase db;
+        static ArrayList<RoutePlaner_EntityOne> routePlanerEntityOne;
+        static ArrayList<RoutePlaner_EntityTwo> routePlanerEntityTwo;
+        static ArrayList<RoutePlaner_EntityThree> routePlanerEntityThree;
+        static AppDatabase db;
 
         public int extra1;
         public int extra2;
@@ -58,15 +61,14 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
             if (extras != null){
 
                 Intent switchToRouteOne = getIntent();
-                extra1 = switchToRouteOne.getIntExtra(FirstscreenRouteplaner.KEY_ROUTE_ONE, 0);
+                extra1 = switchToRouteOne.getIntExtra(Constants.KEY_ROUTE_ONE, 0);
 
                 Intent switchToRouteTwo = getIntent();
-                extra2 = switchToRouteTwo.getIntExtra(FirstscreenRouteplaner.KEY_ROUTE_TWO, 0);
+                extra2 = switchToRouteTwo.getIntExtra(Constants.KEY_ROUTE_TWO, 0);
 
                 Intent switchToRouteThree = getIntent();
-                extra3 = switchToRouteThree.getIntExtra(FirstscreenRouteplaner.KEY_ROUTE_THREE, 0);
+                extra3 = switchToRouteThree.getIntExtra(Constants.KEY_ROUTE_THREE, 0);
             }
-
 
             initDB();
             initUI();
@@ -74,12 +76,13 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
             initListeners();
         }
 
+        //Builds the Database
         private void initDB() {
             db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "saveRoutes").fallbackToDestructiveMigration().build();
         }
 
         /*
-        Referenziert die Komponenten des UI und die ArrayList
+        Inits the UI, the Arraylists and the saved Routes from the Db
          */
         private void initUI() {
 
@@ -110,7 +113,7 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
 
                     if (extra1 == 1 && extra2 == 0 && extra3 == 0 ){
 
-                        routeOneList = db.routeOneInterface().selectAllItems();
+                        routeOneList = db.routeOneInterface().selectAllItemsFromRouteOne();
 
                         for(RoutePlaner_EntityOne item1 : routeOneList) {
                             addItemToRouteOne(item1);
@@ -140,14 +143,15 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
             }).start();
         }
 
+        /*
+        Adds the items to the ArrayLists
+         */
         private void addItemToRouteOne(RoutePlaner_EntityOne item1) {
             routePlanerEntityOne.add(item1);
-
         }
 
         private void addItemToRouteTwo(RoutePlaner_EntityTwo item2) {
             routePlanerEntityTwo.add(item2);
-
         }
 
         private void addItemToRouteThree(RoutePlaner_EntityThree item3){
@@ -155,7 +159,7 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
         }
 
         /*
-        Zeigt an, welche Route gerade bearbeitet wird
+        Shows, which Route is currently edited
          */
         private void setRouteIdentity(){
 
@@ -169,7 +173,7 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
         }
 
         /*
-        Erstellt den Listener für den Button um die Liste um ein Item zu ergänzen
+        Inits the Listener for the add-button
          */
         private void initListeners() {
 
@@ -183,7 +187,9 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
         }
 
         /*
-        Fügt der ArrayList und der Datenbank ein weiteres Ziel+Verkehrsmittel - Paar hinzu
+        Adds another pair of destination and transportation to the Database, if a new entry was made.
+        Scrolls to the latest entry and resets the input-fields.
+        If no entry was made, toasts show up
          */
         private void addToRoute(){
 
@@ -205,9 +211,6 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
                             db.routeOneInterface().insertPartsOfRouteOne(part1);
                             addItemToRouteOne(part1);
 
-
-
-
                         }else if (extra2 == 2 && extra1 == 0 && extra3 == 0){
 
                             final RoutePlaner_EntityTwo part2 = new RoutePlaner_EntityTwo();
@@ -216,7 +219,6 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
 
                             db.routeTwoInterface().insertPartsOfRouteTwo(part2);
                             addItemToRouteTwo(part2);
-
 
                         }else if (extra3 == 3 && extra1 == 0 && extra2 == 0){
 
@@ -247,27 +249,32 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
 
                                 }
 
-
-
                                 enterNewDestination.setText("");
                                 transportation.setSelection(0);
                             }
                         });
-
-
-
                     }
                 }).start();
 
-            } else if (enterNewDestination.getText().length() == 0){
+            } else if (enterNewDestination.getText().length() ==0  &&  transportation.getSelectedItem().toString().length() !=0){
 
-                Toast toast = Toast.makeText(this, "Kein Ziel eingegeben!", Toast.LENGTH_SHORT);
-                toast.show();
+                Toast toast1 = Toast.makeText(this, "Kein Ziel eingegeben!", Toast.LENGTH_SHORT);
+                toast1.show();
+
+            } else if (enterNewDestination.getText().length() !=0 && transportation.getSelectedItem().toString().length() ==0){
+
+                Toast toast2 = Toast.makeText(this, "Kein Verkehrsmittel ausgewählt!", Toast.LENGTH_SHORT);
+                toast2.show();
+
+            } else if (enterNewDestination.getText().length() ==0  &&  transportation.getSelectedItem().toString().length() ==0){
+
+                Toast toast3 = Toast.makeText(this, "Kein Ziel und Verkehrsmittel gewählt!", Toast.LENGTH_SHORT);
+                toast3.show();
             }
         }
 
         /*
-        Erstellt den RecyclerView (Listenansicht).
+        Creates the RecyclerView
          */
         private void initRecyclerView() {
 
@@ -275,16 +282,12 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
             recyclerViewLayoutManager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(recyclerViewLayoutManager);
 
-            //Erstellt und steckt den Adapter an
-
+            //Creates and sets the adapter
             recyclerViewAdapter = new RvAdapter(routePlanerEntityOne, routePlanerEntityTwo, routePlanerEntityThree, extra1, extra2, extra3);
-
             recyclerView.setAdapter(recyclerViewAdapter);
         }
 
-        /*
-        Erstellt die Menüpunkte "löschen" und "speichern"
-         */
+        //Creates the menu with the delete-icon
         @Override
         public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -293,7 +296,7 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
         }
 
         /*
-        Legt die Aktionen für die Menüpunkte fest
+        Sets the action for the icon
          */
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -304,8 +307,9 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
         }
 
 
-
-
+        /*
+        Deletes the Route
+         */
         private void deleteAllItems() {
 
             new Thread(new Runnable() {
@@ -314,8 +318,7 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
 
                     if (extra1 == 1 && extra2 == 0 && extra3 == 0 ){
 
-                        db.routeOneInterface().deleteAllItems();
-
+                        db.routeOneInterface().deleteAllItemsFromRouteOne();
 
                     }else if (extra2 == 2 && extra1 == 0 && extra3 == 0){
 
@@ -324,7 +327,6 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
                     }else if (extra3 == 3 && extra1 == 0 && extra2 == 0){
 
                         db.routeThreeInterface().deleteAllPartsFromRouteThree();
-
                     }
 
                     runOnUiThread(new Runnable() {
@@ -351,12 +353,9 @@ public class SecondscreenRouteplaner extends ActionBarActivity {
                                     routePlanerEntityThree.clear();
                                     recyclerViewAdapter.notifyDataSetChanged();
                                 }
-
                             }
-
                         }
                     });
-
                 }
             }).start();
         }

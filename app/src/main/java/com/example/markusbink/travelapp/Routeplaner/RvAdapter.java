@@ -10,12 +10,18 @@ import android.widget.TextView;
 import com.example.markusbink.travelapp.R;
 import java.util.ArrayList;
 
+/*
+For the work with the RecyclerView and the Adapter, three videos were the source for
+information and inspiration. Some major changes were made. Retrieved between August 1st 2018
+and September 8th 2018.  https://www.youtube.com/watch?v=CTBiwKlO5IU
+https://www.youtube.com/watch?v=3CG-iXdje6E,  https://www.youtube.com/watch?v=ijx4sZVAdHw&t
+ */
+
 public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder> {
 
     private ArrayList<RoutePlaner_EntityOne> routePlanerEntityOne;
     private ArrayList<RoutePlaner_EntityTwo> routePlanerEntityTwo;
     private ArrayList<RoutePlaner_EntityThree> routePlanerEntityThree;
-
 
     private int extra1,extra2,extra3;
 
@@ -30,9 +36,6 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder> {
     }
 
 
-
-
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView elementArrowDown;
@@ -41,7 +44,7 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder> {
 
         public ViewHolder(View itemView) {
 
-            super(itemView); // Gibt die Elemente an die onBindViewHolder - Methode weiter
+            super(itemView); //Sends the Elements to the onBindViewHolder - Method
             elementArrowDown = itemView.findViewById(R.id.imageView);
             elementTransportation = itemView.findViewById(R.id.transportation_show);
             elementDestination = itemView.findViewById(R.id.destination_show);
@@ -50,14 +53,21 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder> {
 
     @NonNull
     @Override
+    //Sets the layout for a single item of the RecyclerView
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
 
         View singleElement = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.singleitem_routeplaner, null);
 
         return new ViewHolder(singleElement);
-        //Wird an den Konstruktor der innere Klasse übergeben, um dort die Layouts zuzuweisen (Beides ein "View")
     }
 
+
+    /*
+    Displays the input from the user in the right views.
+    Provides visual feedback when an item is clicked.
+    Deletes one item of the RecyclerView after it is "long-clicked". Unfortunately it is not
+    completely working and you see the item again, after returning to the route later.
+    */
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int position) {
 
@@ -87,41 +97,55 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder> {
             }
         });
 
+
         viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View view) {
+            public boolean onLongClick(final View view) {
 
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (extra1 == 1 && extra2 == 0 && extra3 == 0 ){
+
+                            SecondscreenRouteplaner.db.routeOneInterface().deleteSelectedItemFromRouteOne(position);
+
+                        }else if (extra2 == 2 && extra1 == 0 && extra3 == 0){
+
+                            SecondscreenRouteplaner.db.routeTwoInterface().deleteSelectedItemFromRouteTwo(position);
+
+                        }else if (extra3 == 3 && extra1 == 0 && extra2 == 0){
+
+                            SecondscreenRouteplaner.db.routeThreeInterface().deleteSelectedItemFromRouteThree(position);
+                        }
+                    }
+                }).start();
 
                 if (extra1 == 1 && extra2 == 0 && extra3 == 0 ){
 
-                    routePlanerEntityOne.remove(position);
-                    notifyDataSetChanged();
+                    SecondscreenRouteplaner.routePlanerEntityOne.remove(position);
+                    notifyItemRemoved(position);
 
                 }else if (extra2 == 2 && extra1 == 0 && extra3 == 0){
 
-                    routePlanerEntityTwo.remove(position);
-                    notifyDataSetChanged();
+                    SecondscreenRouteplaner.routePlanerEntityTwo.remove(position);
+                    notifyItemRemoved(position);
 
                 }else if (extra3 == 3 && extra1 == 0 && extra2 == 0){
 
-                    routePlanerEntityThree.remove(position);
-                    notifyDataSetChanged();
+                    SecondscreenRouteplaner.routePlanerEntityThree.remove(position);
+                    notifyItemRemoved(position);
                 }
 
-
-                return false;
+                return true;
             }
         });
-
-
-
-
-
     }
 
+
+    //Sets the length of the RecyclerView
     @Override
     public int getItemCount() {
-
 
         if (extra1 == 1 && extra2 == 0 && extra3 == 0 ){
 
@@ -136,6 +160,5 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder> {
             return routePlanerEntityThree.size();
         }
         return getItemCount();
-
     }
 }

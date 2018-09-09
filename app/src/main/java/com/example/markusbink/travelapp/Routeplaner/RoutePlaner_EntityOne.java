@@ -4,6 +4,10 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+/*
+Provides the variables, getter and setter for editing Route one
+ */
+
 @Entity(tableName = "routeOne")
 public class RoutePlaner_EntityOne {
 
