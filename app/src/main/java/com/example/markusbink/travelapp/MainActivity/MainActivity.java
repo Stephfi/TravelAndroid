@@ -1,8 +1,14 @@
 package com.example.markusbink.travelapp.MainActivity;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -37,16 +43,43 @@ public class MainActivity extends ActionBarActivity {
 
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
-                .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this)).build()
+                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this)).build()
         );
 
         setContentView(R.layout.activity_main);
+
+        createNotificationChannel();
+        createNotification();
 
         initDB();
         initUi();
         initDatepicker();
         initListeners();
 
+    }
+
+    //Creates the Notification Channel
+    private void createNotificationChannel() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(Constants.CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void createNotification(){
+
+        Intent notifyIntent = new Intent(this, MyReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast
+                (context,  notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,  System.currentTimeMillis(),
+                1000 * 60 * 60 * 24 * 3, pendingIntent);
     }
 
     //Hide MainActivity menu-item
@@ -83,7 +116,7 @@ public class MainActivity extends ActionBarActivity {
                 final String endDate = editTextEndDate.getText().toString();
 
 
-                if(!vacationName.equals("")  && !startDate.equals("") && !endDate.equals("")) {
+                if (!vacationName.equals("") && !startDate.equals("") && !endDate.equals("")) {
 
                     Intent intent = new Intent(MainActivity.this, SingleVacationActivity.class);
                     intent.putExtra(Constants.VACATIONNAME, vacationName);
@@ -167,9 +200,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-
     }
-
 
 
 }
