@@ -20,6 +20,18 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name=".MainActivity.MyReceiver"
+            android:enabled="true"
+            android:exported="false" >
+        </receiver>
+
+        <service
+            android:name=".MainActivity.MyIntentService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE">
+        </service>
+
         <activity android:name=".ActionBarActivity"/>
 
         <activity android:name=".SingleVacationActivity"

@@ -44,4 +44,7 @@
         <item>Flugzeug</item>
         <item>Schiff</item>
     </string-array>
+    
+    <string name="channel_name">Trip</string>
+    <string name="channel_description">Next trip starts soon!</string>
 </resources>
