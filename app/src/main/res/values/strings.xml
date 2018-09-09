@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Reiseapp</string>
+    <string name="app_name">Travel App</string>
     <string name="vacation_name">Name der Reise eingeben</string>
     <string name="reise_planen">Reise planen</string>
     <string name="add_button">Hinzufügen</string>
