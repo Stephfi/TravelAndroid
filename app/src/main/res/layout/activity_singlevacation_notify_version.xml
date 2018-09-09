@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".SingleVacationActivity"
+    android:padding="25dp"
+    >
+
+    <TextView
+        android:id="@+id/textview_vacation_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Playa de La Sol"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textColor="#000"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="20dp"
+        android:layout_below="@id/success_message_subheadline"
+        />
+
+    <LinearLayout
+        android:id="@+id/startdate_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_below="@id/textview_vacation_name"
+        android:layout_marginBottom="10dp"
+        >
+
+
+
+        <TextView
+            android:id="@+id/textview_startdate_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/date_start"
+            android:layout_weight="0.5"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/textview_start_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="24.08.18"
+            android:layout_weight="0.5"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/enddate_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal"
+        android:layout_below="@+id/startdate_wrapper"
+        >
+
+        <TextView
+            android:id="@+id/textview_enddate_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/date_end"
+            android:layout_weight="0.5"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/textview_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="30.08.18"
+            android:layout_weight="0.5"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_back_startactivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/enddate_wrapper"
+        android:layout_marginTop="20dp"
+        android:text="@string/back_to_mainactivity"
+        android:textSize="20sp"
+        android:padding="16dp"
+        android:background="@color/colorAccent"
+        android:textColor="#fff"
+        />
+
+
+
+
+</RelativeLayout>
